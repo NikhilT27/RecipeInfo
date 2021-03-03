@@ -11,7 +11,7 @@ router.get("/", async function (req, res, next) {
       url: "https://edamam-recipe-search.p.rapidapi.com/search",
       params: req.query,
       headers: {
-        "x-rapidapi-key": "48983ec333mshb7c2ab893e713f9p1bdff2jsn15bbe93444a2",
+        "x-rapidapi-key": process.env.RAPIDAPI_KEY,
         "x-rapidapi-host": "edamam-recipe-search.p.rapidapi.com",
       },
     };
