@@ -1,64 +1,124 @@
 import React, { useState } from "react";
-import image from "../images/recipe1.jpg";
 import clock from "../images/clock.svg";
-import { Link } from "react-router-dom";
+import axios from "axios";
 
 import EachRecipeFeature from "../components/EachRecipeFeature";
+import EachIngredients from "../components/EachIngredients";
+import RecipeExtra from "../components/RecipeExtra";
+import cautions from "../images/warning.svg";
+import diet from "../images/diet.svg";
+import health from "../images/heartbeat.svg";
 
-export default function Recipe() {
+export default function Recipe({ data }) {
   const [clicked, setClicked] = useState(false);
+
+  async function saveRecipe() {
+    const token = localStorage.getItem("authToken");
+    const response = await axios.post(
+      "/recipe/saveRecipe",
+      { recipe: data },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    if (response) {
+      console.log(response.data);
+    }
+  }
 
   return (
     <>
-      <div onClick={() => setClicked(true)}>
-        <div className="recipe">
-          <div>
-            <img src={image} alt="name" className="recipe-image" />
-          </div>
+      <div onClick={() => setClicked(true)} className="recipe">
+        <div>
+          <img src={data.image} alt={data.label} className="recipe-image" />
+        </div>
+        {data.totalTime == "0" ? (
+          <div></div>
+        ) : (
           <div className="recipe-time">
             <img src={clock} alt="recipe time" className="recipe-time-logo" />
-            <span>30 mins</span>
+            <span>{data.totalTime} mins</span>
           </div>
-          <div className="recipe-title">Name</div>
-          <div className="recipe-source">Source</div>
-        </div>
+        )}
+        <div className="recipe-title">{data.label}</div>
+        <div className="recipe-source">{data.source}</div>
       </div>
+
       {clicked ? (
         <div className="recipe-detail">
           <div className="recipe-option">
             <div
-              onClick={() => setClicked(false)}
               className="recipe-option-back"
+              onClick={() => setClicked(false)}
             ></div>
-            <div className="recipe-option-save"></div>
+            <div
+              className="recipe-option-save"
+              onClick={() => saveRecipe()}
+            ></div>
           </div>
           <div>
-            <img src={image} alt="name" className="recipe-detail-image" />
+            <img src={data.image} alt="name" className="recipe-detail-image" />
           </div>
           <div className="recipe-detail-data">
+            <div className="recipe-line"></div>
             <div className="recipe-detail-title-box">
               <div>
-                <div className="recipe-detail-title">Name</div>
-                <div className="recipe-detail-source">Source</div>
+                <div className="recipe-detail-title">{data.label}</div>
+                <div className="recipe-detail-source">
+                  Source: {data.source}
+                </div>
               </div>
-              <div className="recipe-detail-time">
-                <img
-                  src={clock}
-                  alt="recipe time"
-                  className="recipe-time-logo"
-                />
-                <span>30 mins</span>
-              </div>
+              {data.totalTime == "0" ? (
+                <div></div>
+              ) : (
+                <div className="recipe-detail-time">
+                  <img
+                    src={clock}
+                    alt="recipe time"
+                    className="recipe-time-logo"
+                  />
+                  <span className="recipe-detail-time-text">
+                    {data.totalTime} mins
+                  </span>
+                </div>
+              )}
             </div>
             <div className="recipe-feature">
-              <EachRecipeFeature value="01" title="Yeild" />
-              <EachRecipeFeature value="200" title="Calories" />
-              <EachRecipeFeature value="163" title="Ounces" />
+              <EachRecipeFeature value={data.yield} title="Yield" />
+              <EachRecipeFeature
+                value={parseFloat(data.calories).toPrecision(4)}
+                title="Calories"
+              />
+              <EachRecipeFeature
+                value={parseFloat(data.totalWeight).toPrecision(4)}
+                title="Ounces"
+              />
             </div>
+
+            <RecipeExtra
+              title="Cautions"
+              list={data.cautions}
+              image={cautions}
+            />
+            <RecipeExtra title="Diet" list={data.dietLabels} image={diet} />
+            <RecipeExtra
+              title="Health"
+              list={data.healthLabels}
+              image={health}
+            />
+
             <div className="recipe-ingredient-title ">Ingredients</div>
-            <div className="recipe-ingredient-each">
-              <div className="bullet"></div>
-              <div className="recipe-ingredient-each-title">Name</div>
+            {data.ingredients.map(({ text, image, weight }) => {
+              return (
+                <EachIngredients text={text} image={image} weight={weight} />
+              );
+            })}
+            <div className="recipe-link">
+              <div className="recipe-link-title ">Recipe Link:</div>
+              <a href={data.url} target="_blank">
+                <div className="recipe-link-logo"></div>
+              </a>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Main from "./components/Main";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
+import Profile from "./components/Profile";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/home">
             <Home />
+          </Route>
+          <Route path="/profile">
+            <Profile />
           </Route>
           <Route path="/">{token ? <Home /> : <Main />}</Route>
         </Switch>
