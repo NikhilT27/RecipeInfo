@@ -514,6 +514,34 @@ form {
   &-history {
     @extend .profile-saved;
   }
+
+  &-each {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 2vw 0vw;
+    &-img {
+      display: flex;
+      width: 12vw;
+      height: 12vw;
+      border-radius: 50%;
+    }
+
+    &-title {
+      font-size: 4vw;
+      width: 50vw;
+      font-weight: 600;
+    }
+
+    &-delete {
+      width: 6vw;
+      height: 6vw;
+      background-image: url(./images/delete.svg);
+      background-size: 6vw 6vw;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
 }
 
 .row {

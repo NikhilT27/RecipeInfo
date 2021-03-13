@@ -1,7 +1,25 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Profile() {
+  const [savedRecipes, setSavedRecipes] = useState({});
+  useEffect(() => {
+    getData();
+  }, []);
+
+  async function getData() {
+    const token = localStorage.getItem("authToken");
+    const response = await axios.get("/recipe/getSavedRecipes", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response) {
+      console.log(response.data);
+      setSavedRecipes(response.data);
+    }
+  }
+
   return (
     <>
       <Link to="/home">
@@ -21,6 +39,24 @@ export default function Profile() {
         <div className="profile-title" style={{ fontWeight: 700 }}>
           Saved
         </div>
+        {Object.keys(savedRecipes).length === 0 &&
+        savedRecipes.constructor === Object ? (
+          <div></div>
+        ) : (
+          savedRecipes.map(({ recipe }) => {
+            let { label, image } = recipe;
+            return (
+              <div className="profile-each">
+                <img src={image} alt={label} className="profile-each-img" />
+                <div className="profile-each-title">{label}</div>
+                <div
+                  className="profile-each-delete"
+                  onClick={() => console.log(`deleted ${label}`)}
+                ></div>
+              </div>
+            );
+          })
+        )}
       </div>
       <div className="profile-history">
         <div className="profile-title" style={{ fontWeight: 700 }}>
