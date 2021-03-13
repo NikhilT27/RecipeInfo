@@ -27,4 +27,17 @@ router.post("/saveRecipe", async function (req, res, next) {
   res.send(req.body);
 });
 
+router.get("/getSavedRecipes", async function (req, res, next) {
+  let headers = req.headers;
+  try {
+    const user = checkAuth(headers);
+    const recipesData = await SavedRecipe.find({ email: user.email });
+    if (recipesData) {
+      res.send(recipesData);
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 module.exports = router;
