@@ -5,7 +5,7 @@ export default function Profile() {
   return (
     <>
       <Link to="/home">
-        <div className="recipe-option-back"></div>
+        <div className="profile-back"></div>
       </Link>
       <div className="profile-detail">
         <div className="profile-image"></div>

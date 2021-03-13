@@ -483,6 +483,7 @@ form {
 
   &-detail {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
     padding: 6vw 2vw;
@@ -490,8 +491,16 @@ form {
     background-color: $recipe-gold;
   }
 
+  &-back {
+    @extend .recipe-option-back;
+    margin-top: -10vw;
+    -ms-transform: translate(2vw, 12vw); /* IE 9 */
+    transform: translate(2vw, 12vw); /* Standard syntax */
+  }
+
   &-info {
-    width: 60vw;
+    padding: 2vw 0vw;
+    width: 90vw;
   }
 
   &-title {
