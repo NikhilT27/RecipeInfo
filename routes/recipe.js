@@ -46,7 +46,7 @@ router.delete("/deleteSavedRecipe", async function (req, res, next) {
     const user = checkAuth(headers);
     const response = await SavedRecipe.deleteOne({
       email: user.email,
-      _id: req.body.id,
+      _id: req.data.id,
     });
     if (response) {
       res.send(response);
