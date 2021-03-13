@@ -40,13 +40,13 @@ router.get("/getSavedRecipes", async function (req, res, next) {
   }
 });
 
-router.delete("/deleteSavedRecipe", async function (req, res, next) {
+router.delete("/deleteSavedRecipe/:id", async function (req, res, next) {
   let headers = req.headers;
   try {
     const user = checkAuth(headers);
     const response = await SavedRecipe.deleteOne({
       email: user.email,
-      _id: req.body.id,
+      _id: req.params.id,
     });
     if (response) {
       res.send(response);
