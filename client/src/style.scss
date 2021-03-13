@@ -542,6 +542,24 @@ form {
       background-repeat: no-repeat;
     }
   }
+
+  &-logout {
+    position: absolute;
+    bottom: 0%;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3vw 0vw;
+    &-button {
+      font-size: 5vw;
+      font-weight: 700;
+      padding: 3vw 5vw;
+      border-radius: 8vw;
+      width: max-content;
+      background-color: $recipe-gold;
+    }
+  }
 }
 
 .row {

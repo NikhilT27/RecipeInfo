@@ -20,6 +20,18 @@ export default function Profile() {
     }
   }
 
+  async function deleteRecipe(id) {
+    const token = localStorage.getItem("authToken");
+    const response = await axios.delete(`/recipe/deleteSavedRecipe/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response) {
+      console.log(response.data);
+      getData();
+    }
+  }
+
   return (
     <>
       <Link to="/home">
@@ -43,7 +55,7 @@ export default function Profile() {
         savedRecipes.constructor === Object ? (
           <div></div>
         ) : (
-          savedRecipes.map(({ recipe }) => {
+          savedRecipes.map(({ _id, recipe }) => {
             let { label, image } = recipe;
             return (
               <div className="profile-each">
@@ -51,19 +63,16 @@ export default function Profile() {
                 <div className="profile-each-title">{label}</div>
                 <div
                   className="profile-each-delete"
-                  onClick={() => console.log(`deleted ${label}`)}
+                  onClick={() => deleteRecipe(_id)}
                 ></div>
               </div>
             );
           })
         )}
       </div>
-      <div className="profile-history">
-        <div className="profile-title" style={{ fontWeight: 700 }}>
-          History
-        </div>
+      <div className="profile-logout">
+        <div className="profile-logout-button">Logout</div>
       </div>
-      <div>Logout</div>
     </>
   );
 }
