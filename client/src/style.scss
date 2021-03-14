@@ -595,7 +595,7 @@ form {
 
 .Cautions {
   border: 0.8vw solid $normal-gray;
-}
+} 
 
 ::placeholder {
   font-size: 4vw;
@@ -625,7 +625,7 @@ form {
     width: 100vw;
     height: 100vh;
     background-color: black;
-    opacity: 95%;
+    opacity: 0.9;
     z-index: 2;
     animation-name: fade;
     animation-duration: 0.3s;
@@ -1173,10 +1173,10 @@ form {
 
 @keyframes fade {
   from {
-    opacity: 0%;
+    opacity: 0;
   }
   to {
-    opacity: 95%;
+    opacity: 0.9;
   }
 }
 
