@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Profile() {
   const [savedRecipes, setSavedRecipes] = useState({});
+  const [user, setUser] = useState({});
+  const history = useHistory();
   useEffect(() => {
     getSavedRecipesData();
+    getUser();
   }, []);
 
   async function getSavedRecipesData() {
@@ -17,6 +20,17 @@ export default function Profile() {
     if (response) {
       console.log(response.data);
       setSavedRecipes(response.data);
+    }
+  }
+
+  async function getUser() {
+    const token = localStorage.getItem("authToken");
+    const response = await axios.get("/users/getUser", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response) {
+      setUser(response.data);
     }
   }
 
@@ -32,6 +46,12 @@ export default function Profile() {
     }
   }
 
+  function logout() {
+    localStorage.removeItem("authToken");
+    history.push("/");
+    setTimeout(history.go(0), 3000);
+  }
+
   return (
     <>
       <Link to="/home">
@@ -40,11 +60,11 @@ export default function Profile() {
       <div className="profile-detail">
         <div className="profile-image"></div>
         <div className="profile-info">
-          <div className="profile-title">Id</div>
+          <div className="profile-title">{user.id}</div>
           <div className="profile-title" style={{ fontWeight: 700 }}>
-            Name
+            {user.name}
           </div>
-          <div className="profile-title">Email</div>
+          <div className="profile-title">{user.email}</div>
         </div>
       </div>
       <div className="profile-saved">
@@ -71,7 +91,9 @@ export default function Profile() {
         )}
       </div>
       <div className="profile-logout">
-        <div className="profile-logout-button">Logout</div>
+        <div className="profile-logout-button" onClick={() => logout()}>
+          Logout
+        </div>
       </div>
     </>
   );

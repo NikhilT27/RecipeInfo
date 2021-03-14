@@ -8,15 +8,29 @@ import Loading from "../components/Loading";
 import { useHistory } from "react-router-dom";
 
 export default function DesktopHome() {
+  const [user, setUser] = useState({});
   const [recipes, setRecipes] = useState({});
   const [savedRecipes, setSavedRecipes] = useState({});
   const [searchData, setSearchData] = useState("Indian");
   const history = useHistory();
 
   useEffect(() => {
+    getUser();
     getData(searchData);
     getSavedRecipesData();
   }, []);
+
+  async function getUser() {
+    const token = localStorage.getItem("authToken");
+    const response = await axios.get("/users/getUser", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response) {
+      setUser(response.data);
+      // console.log(user);
+    }
+  }
 
   async function getData(value) {
     setRecipes({});
@@ -98,9 +112,9 @@ export default function DesktopHome() {
         </div>
         <div className="desktop-profile">
           <img src={profile} className="desktop-profile-image" />
-          <div className="desktop-profile-name">Name</div>
-          <div className="desktop-profile-id">21020102002</div>
-          <div className="desktop-profile-email">nikhilthakare14@gmail.com</div>
+          <div className="desktop-profile-name">{user.name}</div>
+          <div className="desktop-profile-id">{user.id}</div>
+          <div className="desktop-profile-email">{user.email}</div>
           <div className="desktop-profile-logout" onClick={() => logout()}>
             Logout
           </div>

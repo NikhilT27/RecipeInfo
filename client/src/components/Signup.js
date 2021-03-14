@@ -14,6 +14,7 @@ export default function Signup() {
   const { register, handleSubmit, watch, errors } = useForm();
   const onSubmit = async (data) => {
     const user = await axios.post("/users/register", {
+      name: data.name,
       email: data.email,
       password: data.password,
       confirmPassword: data.confirmPassword,
@@ -59,6 +60,15 @@ export default function Signup() {
             )}
 
             <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
+              <input
+                name="name"
+                placeholder="Name"
+                ref={register({ required: true })}
+              />
+              {errors.name && (
+                <Warning logoSrc={warning} message="This field is required" />
+              )}
+
               <input
                 name="email"
                 placeholder="Email"
