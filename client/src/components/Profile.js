@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 export default function Profile() {
   const [savedRecipes, setSavedRecipes] = useState({});
   useEffect(() => {
-    getData();
+    getSavedRecipesData();
   }, []);
 
-  async function getData() {
+  async function getSavedRecipesData() {
     const token = localStorage.getItem("authToken");
     const response = await axios.get("/recipe/getSavedRecipes", {
       headers: { Authorization: `Bearer ${token}` },
@@ -28,7 +28,7 @@ export default function Profile() {
 
     if (response) {
       console.log(response.data);
-      getData();
+      getSavedRecipesData();
     }
   }
 

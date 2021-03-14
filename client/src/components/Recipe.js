@@ -27,6 +27,13 @@ export default function Recipe({ data }) {
     }
   }
 
+  if (clicked) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   return (
     <>
       <div onClick={() => setClicked(true)} className="recipe">
@@ -46,82 +53,89 @@ export default function Recipe({ data }) {
       </div>
 
       {clicked ? (
-        <div className="recipe-detail">
-          <div className="recipe-option">
-            <div
-              className="recipe-option-back"
-              onClick={() => setClicked(false)}
-            ></div>
-            <div
-              className="recipe-option-save"
-              onClick={() => saveRecipe()}
-            ></div>
-          </div>
-          <div>
-            <img src={data.image} alt="name" className="recipe-detail-image" />
-          </div>
-          <div className="recipe-detail-data">
-            <div className="recipe-line"></div>
-            <div className="recipe-detail-title-box">
-              <div>
-                <div className="recipe-detail-title">{data.label}</div>
-                <div className="recipe-detail-source">
-                  Source: {data.source}
+        <>
+          <div className="blur-background"></div>
+          <div className="recipe-detail">
+            <div className="recipe-option">
+              <div
+                className="recipe-option-back"
+                onClick={() => setClicked(false)}
+              ></div>
+              <div
+                className="recipe-option-save"
+                onClick={() => saveRecipe()}
+              ></div>
+            </div>
+            <div>
+              <img
+                src={data.image}
+                alt="name"
+                className="recipe-detail-image"
+              />
+            </div>
+            <div className="recipe-detail-data">
+              <div className="recipe-line"></div>
+              <div className="recipe-detail-title-box">
+                <div>
+                  <div className="recipe-detail-title">{data.label}</div>
+                  <div className="recipe-detail-source">
+                    Source: {data.source}
+                  </div>
                 </div>
+                {data.totalTime == "0" ? (
+                  <div></div>
+                ) : (
+                  <div className="recipe-detail-time">
+                    <img
+                      src={clock}
+                      alt="recipe time"
+                      className="recipe-time-logo"
+                    />
+                    <span className="recipe-detail-time-text">
+                      {data.totalTime} mins
+                    </span>
+                  </div>
+                )}
               </div>
-              {data.totalTime == "0" ? (
-                <div></div>
-              ) : (
-                <div className="recipe-detail-time">
-                  <img
-                    src={clock}
-                    alt="recipe time"
-                    className="recipe-time-logo"
-                  />
-                  <span className="recipe-detail-time-text">
-                    {data.totalTime} mins
-                  </span>
-                </div>
-              )}
-            </div>
-            <div className="recipe-feature">
-              <EachRecipeFeature value={data.yield} title="Yield" />
-              <EachRecipeFeature
-                value={parseFloat(data.calories).toPrecision(4)}
-                title="Calories"
-              />
-              <EachRecipeFeature
-                value={parseFloat(data.totalWeight).toPrecision(4)}
-                title="Ounces"
-              />
-            </div>
+              <div className="recipe-feature">
+                <EachRecipeFeature value={data.yield} title="Yield" />
+                <EachRecipeFeature
+                  value={parseFloat(data.calories).toPrecision(4)}
+                  title="Calories"
+                />
+                <EachRecipeFeature
+                  value={parseFloat(data.totalWeight).toPrecision(4)}
+                  title="Ounces"
+                />
+              </div>
 
-            <RecipeExtra
-              title="Cautions"
-              list={data.cautions}
-              image={cautions}
-            />
-            <RecipeExtra title="Diet" list={data.dietLabels} image={diet} />
-            <RecipeExtra
-              title="Health"
-              list={data.healthLabels}
-              image={health}
-            />
+              <RecipeExtra
+                title="Cautions"
+                list={data.cautions}
+                image={cautions}
+              />
+              <RecipeExtra title="Diet" list={data.dietLabels} image={diet} />
+              <RecipeExtra
+                title="Health"
+                list={data.healthLabels}
+                image={health}
+              />
 
-            <div className="recipe-ingredient-title ">Ingredients</div>
-            {data.ingredients.map(({ text, image, weight }) => {
-              return (
-                <EachIngredients text={text} image={image} weight={weight} />
-              );
-            })}
-            <div className="recipe-link">
-              <div className="recipe-link-title ">Recipe Link:</div>
-              <a href={data.url} target="_blank">
-                <div className="recipe-link-logo"></div>
-              </a>
+              <div className="recipe-ingredient-title ">Ingredients</div>
+              {data.ingredients.map(({ text, image, weight }) => {
+                return (
+                  <EachIngredients text={text} image={image} weight={weight} />
+                );
+              })}
+              <div className="recipe-link">
+                <div className="recipe-link-title ">Recipe Link:</div>
+                <a href={data.url} target="_blank">
+                  <div className="recipe-link-logo"></div>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       ) : (
         <div></div>
       )}

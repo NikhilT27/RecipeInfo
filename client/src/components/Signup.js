@@ -6,6 +6,7 @@ import warning from "../images/warning.svg";
 import leftArrow from "../images/left-arrow.svg";
 import { Link, useHistory } from "react-router-dom";
 import Warning from "./Warning";
+import RecipeInfo from "../components/RecipeInfo";
 
 export default function Signup() {
   const [error, setError] = useState("");
@@ -35,60 +36,63 @@ export default function Signup() {
 
   return (
     <>
-      <div className="signup-box">
-        <Link to="/">
-          <div className="signup-back">
-            <img
-              src={leftArrow}
-              alt="arrow pointing left"
-              className="signup-back-logo"
-            />
+      <div className="login-box-main">
+        <RecipeInfo />
+        <div className="signup-box">
+          <Link to="/">
+            <div className="signup-back">
+              <img
+                src={leftArrow}
+                alt="arrow pointing left"
+                className="signup-back-logo"
+              />
+            </div>
+          </Link>
+          <div className="signup">
+            <div className="logo-background">
+              <img src={logo} alt="logo" className="logo-image" />
+            </div>
+            {error == "" ? (
+              <div></div>
+            ) : (
+              <Warning logoSrc={warning} message={error} />
+            )}
+
+            <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
+              <input
+                name="email"
+                placeholder="Email"
+                ref={register({ required: true })}
+              />
+              {errors.email && (
+                <Warning logoSrc={warning} message="This field is required" />
+              )}
+
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                ref={register({ required: true })}
+              />
+              {errors.password && (
+                <Warning logoSrc={warning} message="This field is required" />
+              )}
+
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                ref={register({ required: true })}
+              />
+              {errors.confirmPassword && (
+                <Warning logoSrc={warning} message="This field is required" />
+              )}
+
+              <button className="golden-button" type="submit">
+                Submit
+              </button>
+            </form>
           </div>
-        </Link>
-        <div className="signup">
-          <div className="logo-background">
-            <img src={logo} alt="logo" className="logo-image" />
-          </div>
-          {error == "" ? (
-            <div></div>
-          ) : (
-            <Warning logoSrc={warning} message={error} />
-          )}
-
-          <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
-            <input
-              name="email"
-              placeholder="Email"
-              ref={register({ required: true })}
-            />
-            {errors.email && (
-              <Warning logoSrc={warning} message="This field is required" />
-            )}
-
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              ref={register({ required: true })}
-            />
-            {errors.password && (
-              <Warning logoSrc={warning} message="This field is required" />
-            )}
-
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              ref={register({ required: true })}
-            />
-            {errors.confirmPassword && (
-              <Warning logoSrc={warning} message="This field is required" />
-            )}
-
-            <button className="golden-button" type="submit">
-              Submit
-            </button>
-          </form>
         </div>
       </div>
     </>

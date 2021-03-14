@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import search from "../images/search.svg";
 import profile from "../images/hero.jpg";
+import logo from "../images/logo.svg";
 import Recipe from "../components/Recipe";
+import DesktopHome from "../components/DesktopHome";
+import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -50,7 +53,9 @@ export default function Home() {
         </div>
         <div className="home-title">Popular Recipes</div>
         {Object.keys(recipes).length === 0 && recipes.constructor === Object ? (
-          <div>Loading</div>
+          <div className="spinner-box">
+            <Loading />
+          </div>
         ) : (
           <div className="home-recipes-box">
             <div>
@@ -70,6 +75,7 @@ export default function Home() {
           </div>
         )}
       </div>
+      <DesktopHome />
     </>
   );
 }
