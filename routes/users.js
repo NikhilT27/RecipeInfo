@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const checkAuth = require("../util/check-auth");
 
 const User = require("../models/User");
 const {
@@ -14,6 +15,7 @@ const generateToken = (user) => {
   return jwt.sign(
     {
       id: user.id,
+      name: user.name,
       email: user.email,
     },
     process.env.SECRET_KEY,
@@ -23,6 +25,18 @@ const generateToken = (user) => {
 
 router.get("/", function (req, res, next) {
   res.send("user");
+});
+
+router.get("/getUser", async function (req, res, next) {
+  let headers = req.headers;
+  try {
+    const user = checkAuth(headers);
+    if (user) {
+      res.send(user);
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
 });
 
 router.post("/login", async function (req, res, next) {
@@ -49,7 +63,7 @@ router.post("/login", async function (req, res, next) {
 });
 
 router.post("/register", async function (req, res, next) {
-  let { email, password, confirmPassword } = req.body;
+  let { name, email, password, confirmPassword } = req.body;
 
   try {
     const { valid, errors } = validateRegisterInput(
@@ -73,6 +87,7 @@ router.post("/register", async function (req, res, next) {
     console.log(password);
 
     const newUser = new User({
+      name,
       email,
       password,
     });
