@@ -1,0 +1,7 @@
+/ /index.html 200
+
+/recipe/*  https://recipe-info-backend-27.herokuapp.com/recipe/:splat  200
+
+/search/*  https://recipe-info-backend-27.herokuapp.com/search/:splat  200
+
+/users/*  https://recipe-info-backend-27.herokuapp.com/users/:splat  200
