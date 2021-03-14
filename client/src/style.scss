@@ -87,11 +87,10 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  bottom: 0;
+  position: relative;
   background-color: $recipe-gold;
   width: 100vw;
-
+  margin-top: 5vh;
   height: max-content;
   &-logo {
     width: 70px;
@@ -101,12 +100,28 @@ form {
     padding: 14px;
   }
   &-detail {
-    width: 70%;
+    width: 40%;
     padding: 0px 10px;
   }
   &-text {
-    font-size: 14px;
+    font-size: 4vw;
     padding: 5px 0px;
+  }
+
+  &-demo{
+    &-box{
+      width: auto;
+    }
+    &-login{
+      width: max-content;
+      font-size: 4vw;
+      font-weight: 700;
+      padding: 2vw;
+      margin: 2vw;
+      border-radius: 1.4vw;
+      color: $recipe-gold;
+      background-color: black; 
+    }
   }
 }
 
@@ -678,12 +693,27 @@ form {
       padding: 1vw;
     }
     &-detail {
-      width: 70%;
+      width: 40%;
       padding: 0px 1vw;
     }
     &-text {
       font-size: 1.2vw;
       padding: 0.4vw 0px;
+    }
+    &-demo{
+      &-box{
+        width: auto;
+      }
+      &-login{
+        width: max-content;
+        font-size: 1.2vw;
+        font-weight: 700;
+        padding: 1vw;
+        margin: 1vw;
+        border-radius: 1.4vw;
+        color: $recipe-gold;
+        background-color: black; 
+      }
     }
   }
 

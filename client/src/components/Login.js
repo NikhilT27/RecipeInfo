@@ -84,7 +84,7 @@ export default function Login() {
               <button className="golden-button">Signup</button>
             </Link>
           </div>
-          <Hint />
+          <Hint onSubmit={onSubmit} />
         </div>
       </div>
     </>
