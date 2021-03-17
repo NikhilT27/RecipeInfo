@@ -83,7 +83,9 @@ export default function DesktopHome() {
             <img src={logo} className="desktop-logo-image" />
           </div>
 
-          <div className="desktop-logo-title">RecipeInfo</div>
+          <div className="desktop-logo-title">
+            Recipe<span style={{ color: "#f5ce32" }}>Info</span>
+          </div>
         </div>
         <div className="desktop-savedRecipes-title">Saved Recipes</div>
         <div className="desktop-savedRecipes">
